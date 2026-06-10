@@ -6,14 +6,14 @@
  
 
 struct SV {
-    char hoten[30];
-    char shsv[10];
-    char gioi;
-    char lop[20];
+    char name[30];
+    char id[10];
+    char sex;
+    char cls[20];
     struct {
-        int ng; int th; int na;
-    } ns;
-    float diem;
+        int day; int month; int year;
+    } birth;
+    float score;
 } ds[100], tg;
 int n =0;
 
@@ -21,65 +21,65 @@ int n =0;
 
 void bosung() {
     while(n<100) {
-        printf("\n vao ho ten sv thu %d ",n+1);
+        printf(" Name student no. %d ",n+1);
         fflush(stdin);
-        gets(ds[n].hoten);
-        if (strlen(ds[n].hoten) ==0) break;
-        printf("\n SHSV : ");
+        gets(ds[n].name);
+        if (strlen(ds[n].name) ==0) break;
+        printf(" ID : ");
         fflush(stdin);
-        gets(ds[n].shsv);
-        printf("\n Gioi : ");
+        gets(ds[n].id);
+        printf(" Sex : ");
+        scanf("%c",&ds[n].sex);
         fflush(stdin);
-        scanf("%c",&ds[n].gioi);
-        printf("\n Ngay sinh : ");
-        scanf("%d",&ds[n].ns.ng);
-        printf("\n Thang : ");
-        scanf("%d",&ds[n].ns.th);
-        printf("\n nam : ");
-        scanf("%d",&ds[n].ns.na);
-
-        printf("\n Lop : ");
+        printf(" Day of birth : ");
+        scanf("%d",&ds[n].birth.day);
+        printf(" Month : ");
+        scanf("%d",&ds[n].birth.month);
+        printf(" Year : ");
+        scanf("%d",&ds[n].birth.year);
+        printf(" Class : ");
         fflush(stdin);
-        gets(ds[n].lop);
-        printf("\n diem : ");
-        scanf("%f", &ds[n].diem);       
+        gets(ds[n].cls);
+        printf(" Score : ");
+        scanf("%f", &ds[n].score);       
         n++;
     }
 }
-char * ten(char *ht) {
-    int i = strlen(ht)-1;
-    while(i>-1 && ht[i]==' ') i--;
-    while(i>-1 && ht[i] !=' ') i--;
-    return ht+i+1;
+char * getLastName(char *name) {
+    int i = strlen(name)-1;
+    while(i>-1 && name[i]==' ') i--;
+    while(i>-1 && name[i] !=' ') i--;
+    return name+i+1;
 }
+
 void sapxep()
 {
     int i,j ;
     for (i=0;i < n-1;i++)
     for (j= i+1; j<n; j++)
-       if (strcmp( ten(ds[i].hoten), ten(ds[j].hoten)) > 0) {
+       if (strcmp( getLastName(ds[i].name), getLastName(ds[j].name)) > 0) {
             tg = ds[i];
             ds[i] =ds[j];
             ds[j] =tg ;         
        }
-       else if (strcmp( ten(ds[i].hoten), ten(ds[j].hoten)) == 0)
-          if (strcmp( ds[i].hoten, ds[j].hoten) > 0) {
+       else if (strcmp( getLastName(ds[i].name), getLastName(ds[j].name)) == 0)
+          if (strcmp( ds[i].name, ds[j].name) > 0) {
                   tg = ds[i];
                 ds[i] =ds[j];
                 ds[j] =tg ; 
           }
 
-    printf("\n Da sap xep xong ");
+    printf("\n Arrange done ! ");
     getch();
 }
 void inds() {
     int i;
-    printf("\n-----------------------------------------------------------------------------------------");
-    printf("\n| Stt |          Ho va ten          |GT |   Shsv  |Ngay sinh |      Ten lop      | Diem |");
-    printf("\n|-----|-----------------------------|---|---------|----------|-------------------|------|");
+    printf("\n-------------------------------------------------------------------------------------------");
+    printf("\n| No  |             Name            |Sex  |    ID   |Birthday  |       Major       | Score |");
+    printf("\n|-----|-----------------------------|-----|---------|----------|-------------------|-------|");
     for (i=0;i<n;i++) 
-       printf("\n|%4d |%-29s| %c |%-9s|%2d/%2d/%4d|%-19s|%5.2f |",i+1,ds[i].hoten,ds[i].gioi,ds[i].shsv,
-       ds[i].ns.ng ,ds[i].ns.th ,ds[i].ns.na,ds[i].lop,ds[i].diem);
+       printf("\n|%4d |%-29s|  %c  |%-9s|%02d/%02d/%4d|%-19s|%6.2f |",i+1,ds[i].name,ds[i].sex,ds[i].id,
+       ds[i].birth.day ,ds[i].birth.month ,ds[i].birth.year,ds[i].cls,ds[i].score);
     getch();
 }
 
